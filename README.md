@@ -8,7 +8,19 @@ Osoba zalogowana do aplikacji. Może przeglądać przyszłe wydarzenia, rezerwow
 
 ### Administrator
 
-Osoba posiadająca dodatkowe uprawnienia, takie jak dodawanie/usuwanie wydarzeń i lokacji.
+Osoba posiadająca dodatkowe uprawnienia, takie jak dodawanie/usuwanie czy aktualizowanie wydarzeń i lokacji.
+
+### Bilety
+
+Bilety podzielone są na kategorie oznaczone kolejnymi wielkimi literami alfabetu. 
+Im wcześniejsza litera alfabetu tym wyższa klasa biletu (np. bilet pod sceną) oraz wyższa cena.
+Każda z kategorii ma określoną pulę biletów.
+
+### Kupowanie biletów
+
+Aby dokonać zakupu biletu należy dokonać jego rezerwacji (która jest ważna przez określony czas), a następnie
+zapłacić za bilet za pomocą środków znajdujących się w portfelu użytkownika - należy wcześniej doładować
+odpowiednią kwotą portfel.
 
 ### Endpointy
 
