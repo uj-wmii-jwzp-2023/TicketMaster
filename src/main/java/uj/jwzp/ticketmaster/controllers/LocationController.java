@@ -32,13 +32,13 @@ public class LocationController {
     @PostMapping()
     public ResponseEntity<String> addLocation(@RequestBody Location newLocation){
         repository.save(newLocation);
-        return ResponseEntity.ok().body("OK");
+        return ResponseEntity.ok().body("Location has benn added");
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteLocation(@PathVariable long id){
         repository.deleteById(id);
-        return ResponseEntity.ok().body("OK");
+        return ResponseEntity.ok().body("Location has been deleted");
     }
 
     @PatchMapping("/{id}")
@@ -49,6 +49,6 @@ public class LocationController {
         location.setId(updatedLocation.getId());
         location.setName(updatedLocation.getName());
         repository.save(location);
-        return ResponseEntity.ok().body("OK");
+        return ResponseEntity.ok().body("Location has been updated");
     }
 }

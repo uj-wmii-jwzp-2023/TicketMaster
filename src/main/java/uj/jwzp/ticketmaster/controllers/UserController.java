@@ -8,11 +8,14 @@ import uj.jwzp.ticketmaster.entities.User;
 import uj.jwzp.ticketmaster.repositories.UserRepository;
 
 import java.math.BigDecimal;
+import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
+    @Autowired
     private final UserRepository repository;
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -39,17 +42,32 @@ public class UserController {
         if (user != null)
             return ResponseEntity.ok().body("You have been logged in!");
         else{
-            return ResponseEntity.ok().body("User not found!");
+            return ResponseEntity.notFound().build();
         }
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<String> userInfo(Principal principal){
+        return ResponseEntity.ok().body(principal.getName());
+    }
+
     @GetMapping("/wallet")
-    public BigDecimal getCash(){
+    public BigDecimal getCash(Principal principal){
+        Optional<User> user = repository.findByUsername(principal.getName());
+        if (user.isPresent()){
+            return user.get().getCash();
+        }
         return BigDecimal.ZERO;
     }
 
     @PostMapping("/wallet/add")
-    public ResponseEntity<String> addCash(@RequestParam BigDecimal cash){
-        return ResponseEntity.ok().body("OK");
+    public ResponseEntity<String> addCash(@RequestParam BigDecimal cash, Principal principal){
+        Optional<User> user = repository.findByUsername(principal.getName());
+        if (user.isPresent()){
+            user.get().setCash(user.get().getCash().add(cash));
+            repository.save(user.get());
+            ResponseEntity.ok();
+        }
+        return ResponseEntity.notFound().build();
     }
 }

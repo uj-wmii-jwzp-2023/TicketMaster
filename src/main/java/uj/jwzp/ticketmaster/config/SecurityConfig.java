@@ -20,10 +20,14 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/users/register", "/", "/users/wallet", "/locations").permitAll()
+                .requestMatchers("/users/register", "/", "/locations").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
+                .defaultSuccessUrl("/locations")
+                .and()
+                .logout()
+                .logoutUrl("/users/logout")
                 .and()
                 .httpBasic();
         return http.build();
