@@ -1,1 +1,1 @@
-rootProject.name = "rentalmaster"
+rootProject.name = "ticketmaster"

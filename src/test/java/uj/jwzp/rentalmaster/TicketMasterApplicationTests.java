@@ -1,10 +1,10 @@
-package uj.jwzp.rentalmaster;
+package uj.jwzp.ticketmaster;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class RentalmasterApplicationTests {
+class TicketMasterApplicationTests {
 
 	@Test
 	void contextLoads() {

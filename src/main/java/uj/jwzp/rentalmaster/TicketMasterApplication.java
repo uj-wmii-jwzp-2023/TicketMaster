@@ -1,13 +1,13 @@
-package uj.jwzp.rentalmaster;
+package uj.jwzp.ticketmaster;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RentalmasterApplication {
+public class TicketMasterApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(RentalmasterApplication.class, args);
+		SpringApplication.run(TicketMasterApplication.class, args);
 	}
 
 }
