@@ -12,7 +12,7 @@ import java.util.List;
 public class LocationController {
     private final LocationRepository repository;
 
-    LocationController(LocationRepository repository){
+    public LocationController(LocationRepository repository){
         this.repository = repository;
     }
 
