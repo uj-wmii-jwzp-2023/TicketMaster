@@ -18,7 +18,7 @@ public class Config {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Bean
+    /*@Bean
     CommandLineRunner initDatabase(UserRepository userRepository, LocationRepository locationRepository) {
 
         return args -> {
@@ -26,5 +26,5 @@ public class Config {
             log.info("Preloading " + userRepository.save(new User("username2", passwordEncoder.encode("password2"))));
             log.info("Preloading " + locationRepository.save(new Location("Tauron Arena")));
         };
-    }
+    }*/
 }
