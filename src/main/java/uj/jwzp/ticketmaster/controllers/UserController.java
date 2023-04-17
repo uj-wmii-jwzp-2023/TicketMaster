@@ -24,7 +24,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestParam String username, @RequestParam String password){
+    public ResponseEntity<String> register(@RequestBody String username, @RequestBody String password){
         userService.register(username, password);
         return ResponseEntity.ok().body("Account has been created!");
     }
