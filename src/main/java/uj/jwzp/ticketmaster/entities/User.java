@@ -11,13 +11,18 @@ public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @Column(nullable = false, unique = true)
     private String username;
+
     @Column(nullable = false)
     private String password;
 
-    private BigDecimal cash;
     @Column(nullable = false)
+    private BigDecimal cash;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private UserRole role;
 
     public User() {}

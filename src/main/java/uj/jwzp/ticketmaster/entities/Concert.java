@@ -5,24 +5,25 @@ import java.util.List;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="locations")
-public class Location {
+@Table(name="concerts")
+public class Concert {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy="location")
-    private List<LocationZone> locationZones;
+    @ManyToOne
+    @JoinColumn(name = "location_id", nullable = false)
+    private Location location;
 
-    @OneToMany(mappedBy="location")
-    private List<Concert> concerts;
+    @OneToMany(mappedBy = "concert")
+    private List<TicketPool> ticketPool;
 
-    public Location() {}
+    public Concert() {}
 
-    public Location(String name){
+    public Concert(String name){
         this.name = name;
     }
 
@@ -40,6 +41,14 @@ public class Location {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
 }
