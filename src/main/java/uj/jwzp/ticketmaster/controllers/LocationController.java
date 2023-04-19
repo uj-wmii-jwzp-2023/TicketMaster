@@ -22,11 +22,9 @@ public class LocationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getById(@PathVariable long id){
+    public ResponseEntity<Location> getById(@PathVariable long id){
         Location location = locationService.getLocationById(id);
-        if (location != null)
-            return ResponseEntity.ok().body(location);
-        else return ResponseEntity.status(404).body("Location with id " + id + " does not exist");
+        return ResponseEntity.ok().body(location);
     }
 
     @PostMapping()
@@ -43,9 +41,7 @@ public class LocationController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<String> updateLocation(@PathVariable long id, @RequestBody Location updatedLocation){
-        if (locationService.updateLocation(id, updatedLocation) == null){
-            return ResponseEntity.status(404).body("Location with id " + id + " does not exist");
-        }
+        locationService.updateLocation(id, updatedLocation);
         return ResponseEntity.ok().body("Location has been updated");
     }
 }

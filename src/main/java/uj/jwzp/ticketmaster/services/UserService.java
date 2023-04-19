@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uj.jwzp.ticketmaster.entities.User;
+import uj.jwzp.ticketmaster.exceptions.UserAlreadyExistsException;
 import uj.jwzp.ticketmaster.repositories.UserRepository;
 
 import java.math.BigDecimal;
@@ -28,6 +29,10 @@ public class UserService {
     }
 
     public void register(String username, String password){
+        Optional<User> user = repository.findByUsername(username);
+        if (user.isPresent()){
+            throw new UserAlreadyExistsException("username: " + username);
+        }
         User newUser = new User(username, passwordEncoder.encode(password));
         repository.save(newUser);
     }

@@ -6,4 +6,6 @@ import uj.jwzp.ticketmaster.entities.Location;
 public interface LocationRepository extends JpaRepository<Location, Long> {
     Location findById(long id);
     void deleteById(long id);
+
+    Location findByName(String name);
 }
