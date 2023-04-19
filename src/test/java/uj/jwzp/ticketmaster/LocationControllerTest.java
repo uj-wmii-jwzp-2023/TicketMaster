@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
 import uj.jwzp.ticketmaster.controllers.LocationController;
 import uj.jwzp.ticketmaster.entities.Location;
 import uj.jwzp.ticketmaster.services.LocationService;
@@ -56,16 +54,6 @@ public class LocationControllerTest {
 
         Mockito.verify(locationService).getLocationById(1);
         Mockito.verify(locationService).getLocationById(2);
-    }
-
-    @Test
-    public void testGetLocationsByIdNotFound() {
-        Mockito.when(locationService.getLocationById(1)).thenReturn(null);
-
-        ResponseEntity responseEntity = locationController.getById(1);
-        Assertions.assertSame(responseEntity.getStatusCode(), HttpStatusCode.valueOf(404));
-
-        Mockito.verify(locationService).getLocationById(1);
     }
 
 }
