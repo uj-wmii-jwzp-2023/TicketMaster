@@ -44,6 +44,8 @@ odpowiednią kwotą portfel.
 | /locations/{id}                                      | POST   | dodanie nowej lokacji                             |
 | /locations/{id}                                      | PATCH  | aktualizacja informacji o lokacji                 |
 | /locations/{id}                                      | DELETE | usunięcie lokacji                                 |
+| /locations/{id}/zones                                | POST   | dodanie strefy                                    |
+| /locations/{id}/zones/{id}                           | DELETE | usunięcie strefy                          |
 | /locations/{id}/events                               | GET    | zwrócenie wszystkich wydarzeń w danej lokacji     |
 | /locations/{id}/events/{id}                          | GET    | szczegóły wydarzenia                              |
 | /locations/{id}/events/{id}                          | POST   | dodanie wydarzenia                                |
