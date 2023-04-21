@@ -13,7 +13,7 @@ public class ConcertController {
     private final ConcertService concertService;
 
     public ConcertController(ConcertService concertService){
-        this.concertService= concertService;
+        this.concertService = concertService;
     }
 
     @GetMapping()
