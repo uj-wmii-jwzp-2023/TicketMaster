@@ -19,6 +19,8 @@ dependencies {
 //	implementation("org.liquibase:liquibase-core")
 	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+//	/swagger-ui/index.html
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
 }
 
 tasks.withType<Test> {
