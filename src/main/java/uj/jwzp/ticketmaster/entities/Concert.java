@@ -5,7 +5,7 @@ import java.util.List;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="concerts")
+@Table(name = "concerts")
 public class Concert {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +23,7 @@ public class Concert {
 
     public Concert() {}
 
-    public Concert(String name){
+    public Concert(String name) {
         this.name = name;
     }
 

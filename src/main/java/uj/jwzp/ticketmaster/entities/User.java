@@ -6,8 +6,8 @@ import uj.jwzp.ticketmaster.UserRole;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name="users")
-public class User{
+@Table(name = "users")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -27,7 +27,7 @@ public class User{
 
     public User() {}
 
-    public User(String username, String password){
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
         this.cash = BigDecimal.ZERO;

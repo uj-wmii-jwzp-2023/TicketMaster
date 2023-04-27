@@ -14,13 +14,13 @@ public class LocationZoneController {
     }
 
     @PostMapping("locations/{locationId}/zones")
-    public ResponseEntity<String> addZone(@PathVariable long locationId, @RequestBody LocationZone newZoneLocation){
+    public ResponseEntity<String> addZone(@PathVariable long locationId, @RequestBody LocationZone newZoneLocation) {
         locationZoneService.addNewZone(locationId, newZoneLocation);
         return ResponseEntity.ok().body("Zone has been added");
     }
 
     @DeleteMapping("locations/{locationId}/zones/{zoneId}")
-    public ResponseEntity<String> deleteZone(@PathVariable long locationId, @PathVariable long zoneId){
+    public ResponseEntity<String> deleteZone(@PathVariable long locationId, @PathVariable long zoneId) {
         locationZoneService.deleteZone(zoneId);
         return ResponseEntity.ok().body("Zone has been deleted");
     }

@@ -5,7 +5,7 @@ import java.util.List;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="locations")
+@Table(name = "locations")
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,15 +14,15 @@ public class Location {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @OneToMany(mappedBy="location")
+    @OneToMany(mappedBy = "location")
     private List<LocationZone> locationZones;
 
-    @OneToMany(mappedBy="location")
+    @OneToMany(mappedBy = "location")
     private List<Concert> concerts;
 
     public Location() {}
 
-    public Location(String name){
+    public Location(String name) {
         this.name = name;
     }
 
