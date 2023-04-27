@@ -10,11 +10,6 @@ import uj.jwzp.ticketmaster.exceptions.EntityAlreadyExistsException;
 import uj.jwzp.ticketmaster.exceptions.EntityNotExistsException;
 import uj.jwzp.ticketmaster.repositories.LocationRepository;
 
-class TestUnhandledException extends RuntimeException {
-    public TestUnhandledException(String exception) {
-        super(exception);
-    }
-}
 
 @Service
 public class LocationService {
@@ -30,8 +25,7 @@ public class LocationService {
     }
 
     public Location getLocationById(long id) {
-        Location location = repository.findById(id).orElseThrow(() -> new EntityNotExistsException(id));
-        return location;
+        return repository.findById(id).orElseThrow(() -> new EntityNotExistsException(id));
     }
 
     public void addNewLocation(Location newLocation) {
