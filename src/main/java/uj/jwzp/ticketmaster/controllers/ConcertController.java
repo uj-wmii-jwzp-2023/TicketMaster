@@ -4,11 +4,12 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import uj.jwzp.ticketmaster.ConcertSchema;
 import uj.jwzp.ticketmaster.entities.Concert;
 import uj.jwzp.ticketmaster.services.ConcertService;
 
 @RestController
-@RequestMapping("/locations/{locationId}/events")
+@RequestMapping("/locations/{locationId}/concerts")
 public class ConcertController {
     private final ConcertService concertService;
 
@@ -22,7 +23,7 @@ public class ConcertController {
     }
 
     @PostMapping()
-    public ResponseEntity<String> addConcert(@PathVariable long locationId, @RequestBody Concert newConcert) {
+    public ResponseEntity<String> addConcert(@PathVariable long locationId, @RequestBody ConcertSchema newConcert) {
         concertService.addConcert(locationId, newConcert);
         return ResponseEntity.ok().body("Concert has been added");
     }
