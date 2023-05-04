@@ -9,7 +9,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/locations/{locationId}/events/{eventId}/tickets")
+@RequestMapping("/locations/{locationId}/concerts/{concertId}/tickets")
 public class TicketController {
     private final TicketService ticketService;
 
@@ -18,18 +18,18 @@ public class TicketController {
     }
 
     @GetMapping()
-    public List<Ticket> getTickets(@PathVariable long locationId, @PathVariable long eventId){
-        return null;
+    public List<Ticket> getTickets(@PathVariable long locationId, @PathVariable long concertId){
+        return ticketService.getAllTickets(locationId, concertId);
     }
 
     @PostMapping("/{ticketId}/reservation")
-    public ResponseEntity<String> reserveTicket(@PathVariable long locationId, @PathVariable long eventId,
+    public ResponseEntity<String> reserveTicket(@PathVariable long locationId, @PathVariable long concertId,
                                                 @PathVariable long ticketId, Principal principal){
         return ResponseEntity.ok().body("Reservation was successful");
     }
 
     @PostMapping("/{ticketId}/purchase")
-    public ResponseEntity<String> purchaseTicket(@PathVariable long locationId, @PathVariable long eventId,
+    public ResponseEntity<String> purchaseTicket(@PathVariable long locationId, @PathVariable long concertId,
                                                  @PathVariable long ticketId, Principal principal){
         return ResponseEntity.ok().body("Purchase was successful");
     }
