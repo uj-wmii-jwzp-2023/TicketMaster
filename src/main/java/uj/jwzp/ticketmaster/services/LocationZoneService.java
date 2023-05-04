@@ -1,5 +1,6 @@
 package uj.jwzp.ticketmaster.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,14 @@ public class LocationZoneService {
         this.locationRepository = locationRepository;
     }
 
-    public void addNewZone(Long locationId, LocationZone locationZone) {
+    public List<LocationZone> getLocationZones(long locationId) {
+        Optional<Location> location = locationRepository.findById(locationId);
+        if (location.isEmpty())
+            throw new EntityNotExistsException(locationId);
+        return repository.findByLocation_Id(locationId);
+    }
+
+    public void addNewZone(long locationId, LocationZone locationZone) {
         Optional<Location> location = locationRepository.findById(locationId);
         if (location.isEmpty())
             throw new EntityNotExistsException(locationId);
