@@ -1,6 +1,5 @@
 package uj.jwzp.ticketmaster.controllers;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uj.jwzp.ticketmaster.entities.LocationZone;
 import uj.jwzp.ticketmaster.services.LocationZoneService;
@@ -21,14 +20,14 @@ public class LocationZoneController {
     }
 
     @PostMapping("locations/{locationId}/zones")
-    public ResponseEntity<String> addZone(@PathVariable long locationId, @RequestBody LocationZone newZoneLocation) {
+    public LocationZone addZone(@PathVariable long locationId, @RequestBody LocationZone newZoneLocation) {
         locationZoneService.addNewZone(locationId, newZoneLocation);
-        return ResponseEntity.ok().body("Zone has been added");
+        return locationZoneService.addNewZone(locationId, newZoneLocation);
     }
 
     @DeleteMapping("locations/{locationId}/zones/{zoneId}")
-    public ResponseEntity<String> deleteZone(@PathVariable long locationId, @PathVariable long zoneId) {
+    public String deleteZone(@PathVariable long locationId, @PathVariable long zoneId) {
         locationZoneService.deleteZone(zoneId);
-        return ResponseEntity.ok().body("Zone has been deleted");
+        return "Zone has been deleted";
     }
 }

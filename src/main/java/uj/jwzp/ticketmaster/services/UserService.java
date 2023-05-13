@@ -29,13 +29,15 @@ public class UserService {
         return repository.findAll();
     }
 
-    public void register(String username, String password) {
+    public User register(String username, String password) {
         Optional<User> user = repository.findByUsername(username);
         if (user.isPresent()) {
             throw new EntityAlreadyExistsException("username", username);
         }
         User newUser = new User(username, passwordEncoder.encode(password));
         repository.save(newUser);
+
+        return newUser;
     }
 
     public BigDecimal getWalletStatus(Principal principal) {

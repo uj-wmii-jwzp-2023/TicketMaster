@@ -32,12 +32,14 @@ public class LocationZoneService {
         return repository.findByLocation_Id(locationId);
     }
 
-    public void addNewZone(long locationId, LocationZone locationZone) {
+    public LocationZone addNewZone(long locationId, LocationZone locationZone) {
         Optional<Location> location = locationRepository.findById(locationId);
         if (location.isEmpty())
             throw new EntityNotExistsException(locationId);
         locationZone.setLocation(location.orElse(null));
         repository.save(locationZone);
+
+        return locationZone;
     }
 
     public void deleteZone(Long zoneId) {

@@ -49,8 +49,8 @@ public class LocationControllerTest {
         Mockito.when(locationService.getLocationById(1)).thenReturn(location1);
         Mockito.when(locationService.getLocationById(2)).thenReturn(location2);
 
-        Assertions.assertSame(locationController.getById(1).getBody(), location1);
-        Assertions.assertSame(locationController.getById(2).getBody(), location2);
+        Assertions.assertSame(locationController.getById(1), location1);
+        Assertions.assertSame(locationController.getById(2), location2);
 
         Mockito.verify(locationService).getLocationById(1);
         Mockito.verify(locationService).getLocationById(2);

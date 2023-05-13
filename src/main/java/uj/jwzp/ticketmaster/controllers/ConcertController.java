@@ -2,7 +2,6 @@ package uj.jwzp.ticketmaster.controllers;
 
 import java.util.List;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uj.jwzp.ticketmaster.ConcertSchema;
 import uj.jwzp.ticketmaster.entities.Concert;
@@ -23,19 +22,18 @@ public class ConcertController {
     }
 
     @PostMapping()
-    public ResponseEntity<String> addConcert(@PathVariable long locationId, @RequestBody ConcertSchema newConcert) {
-        concertService.addConcert(locationId, newConcert);
-        return ResponseEntity.ok().body("Concert has been added");
+    public Concert addConcert(@PathVariable long locationId, @RequestBody ConcertSchema newConcert) {
+        return concertService.addConcert(locationId, newConcert);
     }
 
     @GetMapping("/{concertId}")
-    public ResponseEntity<Concert> getConcertDetails(@PathVariable long locationId, @PathVariable long concertId) {
-        return ResponseEntity.ok().body(concertService.getConcertDetails(locationId, concertId));
+    public Concert getConcertDetails(@PathVariable long locationId, @PathVariable long concertId) {
+        return concertService.getConcertDetails(locationId, concertId);
     }
 
     @DeleteMapping("/{concertId}")
-    public ResponseEntity<String> deleteConcert(@PathVariable long locationId, @PathVariable long concertId) {
+    public String deleteConcert(@PathVariable long locationId, @PathVariable long concertId) {
         concertService.deleteConcert(locationId, concertId);
-        return ResponseEntity.ok().body("Concert has been deleted");
+        return "Concert has been deleted";
     }
 }

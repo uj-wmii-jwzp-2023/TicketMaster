@@ -28,20 +28,24 @@ public class LocationService {
         return repository.findById(id).orElseThrow(() -> new EntityNotExistsException(id));
     }
 
-    public void addNewLocation(Location newLocation) {
+    public Location addNewLocation(Location newLocation) {
         Location location = repository.findByName(newLocation.getName());
         if (location != null)
             throw new EntityAlreadyExistsException("name", newLocation.getName());
         repository.save(newLocation);
+
+        return newLocation;
     }
 
     public void deleteLocation(long id) {
         repository.deleteById(id);
     }
 
-    public void updateLocation(long id, Location updatedLocation) {
+    public Location updateLocation(long id, Location updatedLocation) {
         Location location = repository.findById(id).orElseThrow(() -> new EntityNotExistsException(id));
         location.setName(updatedLocation.getName());
         repository.save(location);
+
+        return location;
     }
 }

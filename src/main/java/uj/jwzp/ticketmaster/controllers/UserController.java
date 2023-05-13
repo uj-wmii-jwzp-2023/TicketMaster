@@ -1,6 +1,5 @@
 package uj.jwzp.ticketmaster.controllers;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uj.jwzp.ticketmaster.LoginForm;
 import uj.jwzp.ticketmaster.entities.User;
@@ -25,14 +24,13 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody LoginForm loginForm){
-        userService.register(loginForm.username, loginForm.password);
-        return ResponseEntity.ok().body("Account has been created!");
+    public User register(@RequestBody LoginForm loginForm){
+        return userService.register(loginForm.username, loginForm.password);
     }
 
     @GetMapping("/me")
-    public ResponseEntity<String> userInfo(Principal principal){
-        return ResponseEntity.ok().body(principal.getName());
+    public String userInfo(Principal principal){
+        return principal.getName();
     }
 
     @GetMapping("/wallet")
@@ -41,8 +39,8 @@ public class UserController {
     }
 
     @PostMapping("/wallet/add")
-    public ResponseEntity<String> addCash(@RequestParam BigDecimal cash, Principal principal){
+    public String addCash(@RequestParam BigDecimal cash, Principal principal){
         userService.addCash(cash, principal);
-        return ResponseEntity.ok().body(cash + " has been added to your wallet");
+        return cash + " has been added to your wallet";
     }
 }

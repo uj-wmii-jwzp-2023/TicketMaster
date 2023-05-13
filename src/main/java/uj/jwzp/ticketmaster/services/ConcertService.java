@@ -44,7 +44,7 @@ public class ConcertService {
         return repository.findByLocation_Id(locationId);
     }
 
-    public void addConcert(long locationId, ConcertSchema concert) {
+    public Concert addConcert(long locationId, ConcertSchema concert) {
         Location location = locationRepository.findById(locationId).orElseThrow(() -> new EntityNotExistsException(locationId));
 
         Concert newConcert = new Concert();
@@ -62,6 +62,8 @@ public class ConcertService {
         }
 
         repository.save(newConcert);
+
+        return newConcert;
     }
 
     public Concert getConcertDetails(long locationId, long concertId) {

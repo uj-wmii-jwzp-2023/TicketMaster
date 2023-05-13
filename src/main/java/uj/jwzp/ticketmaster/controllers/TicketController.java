@@ -1,6 +1,5 @@
 package uj.jwzp.ticketmaster.controllers;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uj.jwzp.ticketmaster.entities.Ticket;
 import uj.jwzp.ticketmaster.services.TicketService;
@@ -23,14 +22,14 @@ public class TicketController {
     }
 
     @PostMapping("/{ticketId}/reservation")
-    public ResponseEntity<String> reserveTicket(@PathVariable long locationId, @PathVariable long concertId,
+    public String reserveTicket(@PathVariable long locationId, @PathVariable long concertId,
                                                 @PathVariable long ticketId, Principal principal){
-        return ResponseEntity.ok().body("Reservation was successful");
+        return "Reservation was successful";
     }
 
     @PostMapping("/{ticketId}/purchase")
-    public ResponseEntity<String> purchaseTicket(@PathVariable long locationId, @PathVariable long concertId,
+    public String purchaseTicket(@PathVariable long locationId, @PathVariable long concertId,
                                                  @PathVariable long ticketId, Principal principal){
-        return ResponseEntity.ok().body("Purchase was successful");
+        return "Purchase was successful";
     }
 }
