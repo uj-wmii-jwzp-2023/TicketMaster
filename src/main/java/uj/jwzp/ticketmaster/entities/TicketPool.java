@@ -15,6 +15,9 @@ public class TicketPool {
     @Column(nullable = false)
     private BigDecimal price;
 
+    @Column(nullable = false)
+    private int ticketsLeft;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "concert_id", referencedColumnName = "id")
     private Concert concert;
@@ -29,10 +32,11 @@ public class TicketPool {
 
     public TicketPool() {}
 
-    public TicketPool(Concert concert, LocationZone locationZone, BigDecimal price) {
+    public TicketPool(Concert concert, LocationZone locationZone, BigDecimal price, int ticketsLeft) {
         this.concert = concert;
         this.locationZone = locationZone;
         this.price = price;
+        this.ticketsLeft = ticketsLeft;
     }
 
     public long getId() {
@@ -41,6 +45,14 @@ public class TicketPool {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public int getTicketsLeft() {
+        return ticketsLeft;
+    }
+
+    public void setTicketsLeft(int ticketsLeft) {
+        this.ticketsLeft = ticketsLeft;
     }
 
     public Concert getConcert() {

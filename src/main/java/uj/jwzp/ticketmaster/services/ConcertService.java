@@ -57,7 +57,7 @@ public class ConcertService {
         for (BigDecimal price : concert.pricesList()) {
             if (locationZones.size() < i + 1)
                 break;
-            ticketPoolRepository.save(new TicketPool(newConcert, locationZones.get(i), price));
+            ticketPoolRepository.save(new TicketPool(newConcert, locationZones.get(i), price, locationZones.get(i).getSeats()));
             i++;
         }
 

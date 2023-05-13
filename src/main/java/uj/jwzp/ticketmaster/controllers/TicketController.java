@@ -24,7 +24,7 @@ public class TicketController {
     @PostMapping("/{ticketId}/reservation")
     public String reserveTicket(@PathVariable long locationId, @PathVariable long concertId,
                                                 @PathVariable long ticketId, Principal principal){
-        return "Reservation was successful";
+        return ticketService.reserveTicket();
     }
 
     @PostMapping("/{ticketId}/purchase")

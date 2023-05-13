@@ -12,6 +12,8 @@ import uj.jwzp.ticketmaster.repositories.LocationRepository;
 import uj.jwzp.ticketmaster.repositories.TicketPoolRepository;
 import uj.jwzp.ticketmaster.repositories.TicketRepository;
 
+import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,12 +28,16 @@ public class TicketService {
     @Autowired
     private final ConcertRepository concertRepository;
 
+    @Autowired
+    private final Clock clock;
+
     public TicketService(TicketRepository ticketRepository, TicketPoolRepository ticketPoolRepository,
-                         LocationRepository locationRepository, ConcertRepository concertRepository) {
+                         LocationRepository locationRepository, ConcertRepository concertRepository, Clock clock) {
         this.ticketRepository = ticketRepository;
         this.ticketPoolRepository = ticketPoolRepository;
         this.locationRepository = locationRepository;
         this.concertRepository = concertRepository;
+        this.clock = clock;
     }
 
     public List<Ticket> getAllTickets(long locationId, long concertId) {
@@ -46,5 +52,9 @@ public class TicketService {
         }
 
         return ticketList;
+    }
+
+    public String reserveTicket() {
+        return LocalDateTime.now(clock).toString();
     }
 }

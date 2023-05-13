@@ -1,6 +1,6 @@
 package uj.jwzp.ticketmaster.entities;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
 
@@ -25,15 +25,15 @@ public class Ticket {
 
 	@Column()
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date reservedAt;
+	private LocalDateTime reservedAt;
 
 	@Column()
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date purchasedAt;
+	private LocalDateTime purchasedAt;
 
 	public Ticket() {}
 
-	public Ticket(TicketPool ticketPool, User reservedBy, User purchasedBy, Date reservedAt, Date purchasedAt) {
+	public Ticket(TicketPool ticketPool, User reservedBy, User purchasedBy, LocalDateTime reservedAt, LocalDateTime purchasedAt) {
 		this.ticketPool = ticketPool;
 		this.reservedBy = reservedBy;
 		this.purchasedBy = purchasedBy;
@@ -73,19 +73,19 @@ public class Ticket {
 		this.purchasedBy = purchasedBy;
 	}
 
-	public Date getReservedAt() {
+	public LocalDateTime getReservedAt() {
 		return reservedAt;
 	}
 
-	public void setReservedAt(Date reservedAt) {
+	public void setReservedAt(LocalDateTime reservedAt) {
 		this.reservedAt = reservedAt;
 	}
 
-	public Date getPurchasedAt() {
+	public LocalDateTime getPurchasedAt() {
 		return purchasedAt;
 	}
 
-	public void setPurchasedAt(Date purchasedAt) {
+	public void setPurchasedAt(LocalDateTime purchasedAt) {
 		this.purchasedAt = purchasedAt;
 	}
 
