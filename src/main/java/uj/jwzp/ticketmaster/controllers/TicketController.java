@@ -21,15 +21,15 @@ public class TicketController {
         return ticketService.getAllTickets(locationId, concertId);
     }
 
-    @PostMapping("/{ticketId}/reservation")
+    @PostMapping("/{locationZoneId}/reservation")
     public String reserveTicket(@PathVariable long locationId, @PathVariable long concertId,
-                                                @PathVariable long ticketId, Principal principal){
-        return ticketService.reserveTicket();
+                                                @PathVariable long locationZoneId, Principal principal){
+        return ticketService.reserveTicket(locationId, concertId, locationZoneId, principal);
     }
 
-    @PostMapping("/{ticketId}/purchase")
-    public String purchaseTicket(@PathVariable long locationId, @PathVariable long concertId,
-                                                 @PathVariable long ticketId, Principal principal){
-        return "Purchase was successful";
+    @PostMapping("/{locationZoneId}/purchase")
+    public Ticket purchaseTicket(@PathVariable long locationId, @PathVariable long concertId,
+                                                 @PathVariable long locationZoneId, Principal principal){
+        return ticketService.purchaseTicket(locationId, concertId, locationZoneId, principal);
     }
 }
