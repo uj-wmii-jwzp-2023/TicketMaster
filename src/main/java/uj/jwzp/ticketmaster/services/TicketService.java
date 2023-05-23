@@ -58,65 +58,31 @@ public class TicketService {
     }
 
     public String reserveTicket(long locationId, long concertId, long locationZoneId, Principal principal) {
-        Location location = locationRepository.findById(locationId).orElseThrow(() -> new EntityNotExistsException(locationId));
-        Concert concert = concertRepository.findById(concertId).orElseThrow(() -> new EntityNotExistsException(concertId));
-        LocationZone locationZone = locationZoneRepository.findById(locationZoneId).orElseThrow(() -> new EntityNotExistsException(locationZoneId));
-
-        if (concert.getLocation() != location) {
-            throw new EntityNotExistsException(locationZoneId);
-        }
-
-        if (locationZone.getLocation() != location) {
-            throw new EntityNotExistsException(locationZoneId);
-        }
-
-        List<TicketPool> ticketPool = ticketPoolRepository.findByConcertId(concertId).stream()
-                .filter(ticketPool1 -> ticketPool1.getLocationZone() == locationZone).toList();
-
-        if (ticketPool.get(0).getTicketsLeft() == 0) {
-            throw new EntityNotExistsException(locationZoneId);
-        }
+        TicketPool ticketPool = getTicketPool(locationId, concertId, locationZoneId);
 
         User user = userRepository.findByUsername(principal.getName()).get();
 
-        Ticket ticket = new Ticket(ticketPool.get(0), user, null, LocalDateTime.now(clock), null);
+        Ticket ticket = new Ticket(ticketPool, user, null, LocalDateTime.now(clock), null);
 
-        ticketPool.get(0).setTicketsLeft(ticketPool.get(0).getTicketsLeft() - 1);
+        ticketPool.setTicketsLeft(ticketPool.getTicketsLeft() - 1);
 
-        ticketPoolRepository.save(ticketPool.get(0));
+        ticketPoolRepository.save(ticketPool);
 
         ticketRepository.save(ticket);
 
         return "Reservation was successful";
     }
 
-    public Ticket purchaseTicket(long locationId, long concertId, long locationZoneId, Principal principal){
-        Location location = locationRepository.findById(locationId).orElseThrow(() -> new EntityNotExistsException(locationId));
-        Concert concert = concertRepository.findById(concertId).orElseThrow(() -> new EntityNotExistsException(concertId));
-        LocationZone locationZone = locationZoneRepository.findById(locationZoneId).orElseThrow(() -> new EntityNotExistsException(locationZoneId));
-
-        if (concert.getLocation() != location) {
-            throw new EntityNotExistsException(locationZoneId);
-        }
-
-        if (locationZone.getLocation() != location) {
-            throw new EntityNotExistsException(locationZoneId);
-        }
-
-        List<TicketPool> ticketPool = ticketPoolRepository.findByConcertId(concertId).stream()
-                .filter(ticketPool1 -> ticketPool1.getLocationZone() == locationZone).toList();
-
-        if (ticketPool.get(0).getTicketsLeft() == 0) {
-            throw new EntityNotExistsException(locationZoneId);
-        }
+    public Ticket purchaseTicket(long locationId, long concertId, long locationZoneId, Principal principal) {
+        TicketPool ticketPool = getTicketPool(locationId, concertId, locationZoneId);
 
         User user = userRepository.findByUsername(principal.getName()).get();
 
-        if (ticketPool.get(0).getPrice().compareTo(user.getCash()) == 1) {
+        if (ticketPool.getPrice().compareTo(user.getCash()) == 1) {
             throw new EntityNotExistsException(locationId);
         }
 
-        List<Ticket> ticketList = ticketRepository.findByReservedBy(user).stream().filter(ticket -> ticket.getTicketPool() == ticketPool.get(0)).toList();
+        List<Ticket> ticketList = ticketRepository.findByReservedBy(user).stream().filter(ticket -> ticket.getTicketPool() == ticketPool).toList();
 
         if (ticketList.size() == 0) {
             throw new EntityNotExistsException(locationZoneId);
@@ -125,12 +91,35 @@ public class TicketService {
         ticketList.get(0).setPurchasedBy(user);
         ticketList.get(0).setPurchasedAt(LocalDateTime.now(clock));
 
-        ticketPool.get(0).setTicketsLeft(ticketPool.get(0).getTicketsLeft() - 1);
+        ticketPool.setTicketsLeft(ticketPool.getTicketsLeft() - 1);
 
-        ticketPoolRepository.save(ticketPool.get(0));
+        ticketPoolRepository.save(ticketPool);
 
         ticketRepository.save(ticketList.get(0));
 
         return ticketList.get(0);
+    }
+
+    private TicketPool getTicketPool(long locationId, long concertId, long locationZoneId) {
+        Location location = locationRepository.findById(locationId).orElseThrow(() -> new EntityNotExistsException(locationId));
+        Concert concert = concertRepository.findById(concertId).orElseThrow(() -> new EntityNotExistsException(concertId));
+        LocationZone locationZone = locationZoneRepository.findById(locationZoneId).orElseThrow(() -> new EntityNotExistsException(locationZoneId));
+
+        if (concert.getLocation() != location) {
+            throw new EntityNotExistsException(locationZoneId);
+        }
+
+        if (locationZone.getLocation() != location) {
+            throw new EntityNotExistsException(locationZoneId);
+        }
+
+        List<TicketPool> ticketPool = ticketPoolRepository.findByConcertId(concertId).stream()
+                .filter(ticketPool1 -> ticketPool1.getLocationZone() == locationZone).toList();
+
+        if (ticketPool.get(0).getTicketsLeft() == 0) {
+            throw new EntityNotExistsException(locationZoneId);
+        }
+
+        return ticketPool.get(0);
     }
 }
