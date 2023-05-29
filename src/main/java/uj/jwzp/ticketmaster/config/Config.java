@@ -1,5 +1,7 @@
 package uj.jwzp.ticketmaster.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +22,7 @@ public class Config {
     @Autowired
     private TicketRepository ticketRepository;
     private final Clock clock = Clock.systemUTC();
+    private Logger logger = LoggerFactory.getLogger(Config.class);
     @Bean
     public Clock clock() {
         return Clock.systemUTC();
@@ -30,10 +33,16 @@ public class Config {
         List<Ticket> ticketList = ticketRepository.findAll();
         LocalDateTime localTime = LocalDateTime.now(clock);
 
+        logger.info("Scheduled task started");
+        int deletedTickets = 0;
+
         for (Ticket ticket : ticketList) {
             if (ticket.getPurchasedAt() == null && Duration.between(ticket.getReservedAt(), localTime).toMinutes() > 5) {
                 ticketRepository.delete(ticket);
+                deletedTickets++;
             }
         }
+
+        logger.info("Deleted " + deletedTickets + " tickets");
     }
 }
