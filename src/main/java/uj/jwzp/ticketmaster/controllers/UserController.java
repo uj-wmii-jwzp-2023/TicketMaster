@@ -2,6 +2,7 @@ package uj.jwzp.ticketmaster.controllers;
 
 import org.springframework.web.bind.annotation.*;
 import uj.jwzp.ticketmaster.LoginForm;
+import uj.jwzp.ticketmaster.entities.Ticket;
 import uj.jwzp.ticketmaster.entities.User;
 import uj.jwzp.ticketmaster.services.UserService;
 
@@ -29,8 +30,8 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    public String userInfo(Principal principal){
-        return principal.getName();
+    public List<Ticket> userTickets(Principal principal){
+        return userService.getUserTickets(principal);
     }
 
     @GetMapping("/wallet")

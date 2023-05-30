@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import uj.jwzp.ticketmaster.entities.Ticket;
 import uj.jwzp.ticketmaster.entities.User;
 import uj.jwzp.ticketmaster.exceptions.EntityAlreadyExistsException;
+import uj.jwzp.ticketmaster.repositories.TicketRepository;
 import uj.jwzp.ticketmaster.repositories.UserRepository;
 
 @Service
@@ -18,11 +20,14 @@ public class UserService {
     @Autowired
     private final UserRepository repository;
     @Autowired
+    private final TicketRepository ticketRepository;
+    @Autowired
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository repository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository repository, PasswordEncoder passwordEncoder, TicketRepository ticketRepository) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
+        this.ticketRepository = ticketRepository;
     }
 
     public List<User> getAllUsers() {
@@ -54,5 +59,13 @@ public class UserService {
             user.get().setCash(user.get().getCash().add(cash));
             repository.save(user.get());
         }
+    }
+
+    public List<Ticket> getUserTickets(Principal principal) {
+        Optional<User> user = repository.findByUsername(principal.getName());
+        if (user.isPresent()) {
+            return ticketRepository.findByReservedBy(user.get());
+        }
+        return List.of();
     }
 }
