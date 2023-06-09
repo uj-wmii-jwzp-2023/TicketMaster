@@ -22,6 +22,21 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		return createProblemFromException(ex, HttpStatus.BAD_REQUEST, "errors/already-exists");
 	}
 
+	@ExceptionHandler(NotEnoughCashException.class)
+	public ProblemDetail handleNotEnoughCashException(NotEnoughCashException ex, WebRequest request) {
+		return createProblemFromException(ex, HttpStatus.BAD_REQUEST, "errors/already-exists");
+	}
+
+	@ExceptionHandler(NoTicketsLeftException.class)
+	public ProblemDetail handleNoTicketsLeftException(NoTicketsLeftException ex, WebRequest request) {
+		return createProblemFromException(ex, HttpStatus.BAD_REQUEST, "errors/already-exists");
+	}
+
+	@ExceptionHandler(TicketPurchaseException.class)
+	public ProblemDetail handleTicketPurchaseException(TicketPurchaseException ex, WebRequest request) {
+		return createProblemFromException(ex, HttpStatus.BAD_REQUEST, "errors/already-exists");
+	}
+
 	private ProblemDetail createProblemFromException(Exception ex, HttpStatus status, String problemType) {
 		ProblemDetail problem = ProblemDetail.forStatusAndDetail(status, ex.getLocalizedMessage());
 		problem.setType(URI.create(problemType));

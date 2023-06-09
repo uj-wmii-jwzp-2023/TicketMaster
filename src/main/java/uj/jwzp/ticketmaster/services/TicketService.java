@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import uj.jwzp.ticketmaster.entities.*;
 import uj.jwzp.ticketmaster.exceptions.EntityNotExistsException;
+import uj.jwzp.ticketmaster.exceptions.NoTicketsLeftException;
+import uj.jwzp.ticketmaster.exceptions.NotEnoughCashException;
+import uj.jwzp.ticketmaster.exceptions.TicketPurchaseException;
 import uj.jwzp.ticketmaster.repositories.*;
 
 import java.security.Principal;
@@ -12,13 +15,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO errors in reserveTicket and purchaseTicket
 @Service
 public class TicketService {
     @Autowired
     private final TicketRepository ticketRepository;
-    @Autowired
-    private final LocationRepository locationRepository;
     @Autowired
     private final TicketPoolRepository ticketPoolRepository;
     @Autowired
@@ -32,19 +32,17 @@ public class TicketService {
     private final Clock clock;
 
     public TicketService(TicketRepository ticketRepository, TicketPoolRepository ticketPoolRepository,
-                         LocationRepository locationRepository, ConcertRepository concertRepository, Clock clock,
+                         ConcertRepository concertRepository, Clock clock,
                          LocationZoneRepository locationZoneRepository, UserRepository userRepository) {
         this.ticketRepository = ticketRepository;
         this.ticketPoolRepository = ticketPoolRepository;
-        this.locationRepository = locationRepository;
         this.concertRepository = concertRepository;
         this.clock = clock;
         this.locationZoneRepository = locationZoneRepository;
         this.userRepository = userRepository;
     }
 
-    public List<Ticket> getAllTickets(long locationId, long concertId) {
-        Location location = locationRepository.findById(locationId).orElseThrow(() -> new EntityNotExistsException(locationId));
+    public List<Ticket> getAllTickets(long concertId) {
         Concert concert = concertRepository.findById(concertId).orElseThrow(() -> new EntityNotExistsException(concertId));
 
         List<TicketPool> ticketPoolList = ticketPoolRepository.findByConcertId(concertId);
@@ -57,8 +55,9 @@ public class TicketService {
         return ticketList;
     }
 
-    public String reserveTicket(long locationId, long concertId, long locationZoneId, Principal principal) {
-        TicketPool ticketPool = getTicketPool(locationId, concertId, locationZoneId);
+    //TODO: ticketsLeft decremental in trigger?
+    public String reserveTicket(long concertId, long locationZoneId, Principal principal) {
+        TicketPool ticketPool = getTicketPool(concertId, locationZoneId);
 
         User user = userRepository.findByUsername(principal.getName()).get();
 
@@ -73,53 +72,42 @@ public class TicketService {
         return "Reservation was successful";
     }
 
-    public Ticket purchaseTicket(long locationId, long concertId, long locationZoneId, Principal principal) {
-        TicketPool ticketPool = getTicketPool(locationId, concertId, locationZoneId);
+    public Ticket purchaseTicket(long concertId, long locationZoneId, Principal principal) {
+        TicketPool ticketPool = getTicketPool(concertId, locationZoneId);
 
         User user = userRepository.findByUsername(principal.getName()).get();
 
-        if (ticketPool.getPrice().compareTo(user.getCash()) == 1) {
-            throw new EntityNotExistsException(locationId);
+        if (ticketPool.getPrice().compareTo(user.getCash()) > 0) {
+            throw new NotEnoughCashException(user.getCash(), ticketPool.getPrice());
         }
 
         List<Ticket> ticketList = ticketRepository.findByReservedBy(user).stream().filter(ticket -> ticket.getTicketPool() == ticketPool).toList();
 
         if (ticketList.size() == 0) {
-            throw new EntityNotExistsException(locationZoneId);
+            throw new TicketPurchaseException();
         }
 
-        ticketList.get(0).setPurchasedBy(user);
-        ticketList.get(0).setPurchasedAt(LocalDateTime.now(clock));
+        Ticket purchasedTicket = ticketList.get(0);
 
-        ticketPool.setTicketsLeft(ticketPool.getTicketsLeft() - 1);
+        purchasedTicket.setPurchasedBy(user);
+        purchasedTicket.setPurchasedAt(LocalDateTime.now(clock));
 
-        ticketPoolRepository.save(ticketPool);
+        ticketRepository.save(purchasedTicket);
 
-        ticketRepository.save(ticketList.get(0));
-
-        return ticketList.get(0);
+        return purchasedTicket;
     }
 
-    private TicketPool getTicketPool(long locationId, long concertId, long locationZoneId) {
-        Location location = locationRepository.findById(locationId).orElseThrow(() -> new EntityNotExistsException(locationId));
+    private TicketPool getTicketPool(long concertId, long locationZoneId) {
         Concert concert = concertRepository.findById(concertId).orElseThrow(() -> new EntityNotExistsException(concertId));
         LocationZone locationZone = locationZoneRepository.findById(locationZoneId).orElseThrow(() -> new EntityNotExistsException(locationZoneId));
 
-        if (concert.getLocation() != location) {
-            throw new EntityNotExistsException(locationZoneId);
+        TicketPool ticketPool = ticketPoolRepository.findByConcertId(concertId).stream()
+                .filter(currentTicketPool -> currentTicketPool.getLocationZone() == locationZone).toList().get(0);
+
+        if (ticketPool.getTicketsLeft() == 0) {
+            throw new NoTicketsLeftException(ticketPool.getId());
         }
 
-        if (locationZone.getLocation() != location) {
-            throw new EntityNotExistsException(locationZoneId);
-        }
-
-        List<TicketPool> ticketPool = ticketPoolRepository.findByConcertId(concertId).stream()
-                .filter(ticketPool1 -> ticketPool1.getLocationZone() == locationZone).toList();
-
-        if (ticketPool.get(0).getTicketsLeft() == 0) {
-            throw new EntityNotExistsException(locationZoneId);
-        }
-
-        return ticketPool.get(0);
+        return ticketPool;
     }
 }

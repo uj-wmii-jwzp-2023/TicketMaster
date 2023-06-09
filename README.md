@@ -37,25 +37,26 @@ odpowiednią kwotą portfel.
 
 ## Endpointy
 
-| Ścieżka                                                   | HTTP   | Opis                                              |
-|-----------------------------------------------------------|--------|---------------------------------------------------|
-| /locations                                                | GET    | zwrócenie wszystkich lokacji                      |
-| /locations/{id}                                           | GET    | zwrócenie podstawowych informacji o danej lokacji |
-| /locations                                               | POST   | dodanie nowej lokacji                             |
-| /locations/{id}                                           | PATCH  | aktualizacja informacji o lokacji                 |
-| /locations/{id}                                           | DELETE | usunięcie lokacji                                 |
-| /locations/{id}/zones                                     | POST   | dodanie strefy                                    |
-| /locations/{id}/zones/{id}                                | DELETE | usunięcie strefy                                  |
-| /locations/{id}/zones                                     | GET    | zwrócenie wszystkich stref                        |
-| /locations/{id}/concerts                                  | GET    | zwrócenie wszystkich wydarzeń w danej lokacji     |
-| /locations/{id}/concerts/{id}                             | GET    | szczegóły wydarzenia                              |
-| /locations/{id}/concerts                                 | POST   | dodanie wydarzenia                                |
-| /locations/{id}/concerts/{id}                             | PATCH  | aktualizacja wydarzenia                           |
-| /locations/{id}/concerts/{id}                             | DELETE | usunięcie wydarzenia                              |
-| /locations/{id}/concerts/{id}/tickets                     | GET    | wyświetlenie dostępnych biletów                   |
-| /locations/{id}/concerts/{id}/tickets/{locationZoneId}/reservation | POST   | rezerwacja biletu                                 |
-| /locations/{id}/concerts/{id}/tickets/{locationZoneId}/purchase | POST   | zakup biletu                                      |
-| /users/login                                              | POST   | logowanie                                         |
-| /users/register                                           | POST   | rejestracja                                       |
-| /users/wallet/add                                         | POST   | dodanie środków                                   |
-| /users/wallet                                             | GET    | stan środków                                      |
+| Ścieżka                                                            | HTTP   | Opis                                              | Uprawnieni użytkownicy |
+|--------------------------------------------------------------------|--------|---------------------------------------------------|------------------------|
+| /locations                                                         | GET    | zwrócenie wszystkich lokacji                      | ADMIN, USER            |
+| /locations/{id}                                                    | GET    | zwrócenie podstawowych informacji o danej lokacji | ADMIN, USER            |
+| /locations                                                         | POST   | dodanie nowej lokacji                             | ADMIN                  |
+| /locations/{id}                                                    | PATCH  | aktualizacja informacji o lokacji                 | ADMIN                  |
+| /locations/{id}                                                    | DELETE | usunięcie lokacji                                 | ADMIN                  |
+| /locations/{id}/zones                                              | POST   | dodanie strefy                                    | ADMIN                  |
+| /locations/{id}/zones/{id}                                         | DELETE | usunięcie strefy                                  | ADMIN                  |
+| /locations/{id}/zones                                              | GET    | zwrócenie wszystkich stref                        | ADMIN, USER            |
+| /locations/{id}/concerts                                           | GET    | zwrócenie wszystkich wydarzeń w danej lokacji     | ADMIN, USER            |
+| /locations/{id}/concerts/{id}                                      | GET    | szczegóły wydarzenia                              | ADMIN, USER            |
+| /locations/{id}/concerts                                           | POST   | dodanie wydarzenia                                | ADMIN                  |
+| /locations/{id}/concerts/{id}                                      | DELETE | usunięcie wydarzenia                              | ADMIN                  |
+| /concerts/{id}/tickets                              | GET    | wyświetlenie dostępnych biletów                   | ADMIN, USER            |
+| /concerts/{id}/tickets/{locationZoneId}/reservation | POST   | rezerwacja biletu                                 | ADMIN, USER |
+| /concerts/{id}/tickets/{locationZoneId}/purchase    | POST   | zakup biletu                                      | ADMIN, USER |
+| /users                                                             | GET    | zwrócenie wszystkich użytkowników                 | ADMIN |
+| /login                                                             | POST   | logowanie                                         | - |
+| /register                                                          | POST   | rejestracja                                       | - |
+| /wallet/add                                                        | POST   | dodanie środków                                   | ADMIN, USER |
+| /wallet                                                            | GET    | stan środków                                      | ADMIN, USER |
+| /deactivate                                                        | POST   | dezaktywacja konta użytkownika                    | ADMIN, USER |

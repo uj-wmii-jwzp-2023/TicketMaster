@@ -8,6 +8,7 @@ import uj.jwzp.ticketmaster.services.LocationZoneService;
 import java.util.List;
 
 @RestController
+@RequestMapping("/locations/{locationId}/zones")
 public class LocationZoneController {
     private final LocationZoneService locationZoneService;
 
@@ -15,19 +16,19 @@ public class LocationZoneController {
         this.locationZoneService = locationZoneService;
     }
 
-    @GetMapping("locations/{locationId}/zones")
+    @GetMapping()
     public List<LocationZone> getLocationZones(@PathVariable long locationId) {
         return locationZoneService.getLocationZones(locationId);
     }
 
-    @PostMapping("locations/{locationId}/zones")
+    @PostMapping()
     @PreAuthorize("hasAuthority('ADMIN')")
     public LocationZone addZone(@PathVariable long locationId, @RequestBody LocationZone newZoneLocation) {
         locationZoneService.addNewZone(locationId, newZoneLocation);
         return locationZoneService.addNewZone(locationId, newZoneLocation);
     }
 
-    @DeleteMapping("locations/{locationId}/zones/{zoneId}")
+    @DeleteMapping("/{zoneId}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String deleteZone(@PathVariable long locationId, @PathVariable long zoneId) {
         locationZoneService.deleteZone(zoneId);
