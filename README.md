@@ -51,7 +51,7 @@ odpowiednią kwotą portfel.
 | /locations/{id}/concerts/{id}                      | GET    | szczegóły wydarzenia                              | ADMIN, USER            |
 | /locations/{id}/concerts                           | POST   | dodanie wydarzenia                                | ADMIN                  |
 | /locations/{id}/concerts/{id}                      | DELETE | usunięcie wydarzenia                              | ADMIN                  |
-| /concerts/{id}/tickets                             | GET    | wyświetlenie dostępnych biletów                   | ADMIN, USER            |
+| /concerts/{id}/tickets                             | GET    | wyświetlenie zakupionych/zarezerwowanych biletów  | ADMIN            |
 | /concerts/{id}/tickets/{locationZoneId}/reservation | POST   | rezerwacja biletu                                 | ADMIN, USER            |
 | /concerts/{id}/tickets/{locationZoneId}/purchase   | POST   | zakup biletu                                      | ADMIN, USER            |
 | /users                                             | GET    | zwrócenie wszystkich użytkowników                 | ADMIN                  |
