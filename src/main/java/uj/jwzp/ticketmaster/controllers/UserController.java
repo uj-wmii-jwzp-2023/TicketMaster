@@ -36,7 +36,7 @@ public class UserController {
         return "Operation was successful";
     }
 
-    @GetMapping("/my_tickets")
+    @GetMapping("/mytickets")
     public List<Ticket> userTickets(Principal principal){
         return userService.getUserTickets(principal);
     }
