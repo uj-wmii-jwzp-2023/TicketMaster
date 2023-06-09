@@ -72,25 +72,31 @@ public class TicketService {
         return "Reservation was successful";
     }
 
+    //TODO: user balance update in trigger?
     public Ticket purchaseTicket(long concertId, long locationZoneId, Principal principal) {
         TicketPool ticketPool = getTicketPool(concertId, locationZoneId);
 
         User user = userRepository.findByUsername(principal.getName()).get();
 
-        if (ticketPool.getPrice().compareTo(user.getCash()) > 0) {
-            throw new NotEnoughCashException(user.getCash(), ticketPool.getPrice());
-        }
-
-        List<Ticket> ticketList = ticketRepository.findByReservedBy(user).stream().filter(ticket -> ticket.getTicketPool() == ticketPool).toList();
+        List<Ticket> ticketList = ticketRepository.findByReservedBy(user).stream()
+                .filter(ticket -> ticket.getTicketPool() == ticketPool && ticket.getPurchasedAt() == null).toList();
 
         if (ticketList.size() == 0) {
             throw new TicketPurchaseException();
+        }
+
+        if (ticketPool.getPrice().compareTo(user.getCash()) > 0) {
+            throw new NotEnoughCashException(user.getCash(), ticketPool.getPrice());
         }
 
         Ticket purchasedTicket = ticketList.get(0);
 
         purchasedTicket.setPurchasedBy(user);
         purchasedTicket.setPurchasedAt(LocalDateTime.now(clock));
+
+        user.setCash(user.getCash().subtract(ticketPool.getPrice()));
+
+        userRepository.save(user);
 
         ticketRepository.save(purchasedTicket);
 

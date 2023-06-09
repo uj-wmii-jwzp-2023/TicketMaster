@@ -28,7 +28,7 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/users/register", "/error", "/", "/locations").permitAll()
+                .requestMatchers("/register", "/error", "/", "/locations").permitAll()
                 .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").anonymous()
                 .anyRequest().authenticated()
                 .and()
