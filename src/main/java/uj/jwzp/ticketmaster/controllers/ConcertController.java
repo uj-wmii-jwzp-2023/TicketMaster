@@ -2,6 +2,7 @@ package uj.jwzp.ticketmaster.controllers;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import uj.jwzp.ticketmaster.ConcertSchema;
 import uj.jwzp.ticketmaster.entities.Concert;
@@ -22,6 +23,7 @@ public class ConcertController {
     }
 
     @PostMapping()
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Concert addConcert(@PathVariable long locationId, @RequestBody ConcertSchema newConcert) {
         return concertService.addConcert(locationId, newConcert);
     }
@@ -32,6 +34,7 @@ public class ConcertController {
     }
 
     @DeleteMapping("/{concertId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String deleteConcert(@PathVariable long locationId, @PathVariable long concertId) {
         concertService.deleteConcert(locationId, concertId);
         return "Concert has been deleted";

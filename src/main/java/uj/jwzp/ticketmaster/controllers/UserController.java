@@ -1,5 +1,6 @@
 package uj.jwzp.ticketmaster.controllers;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import uj.jwzp.ticketmaster.LoginForm;
 import uj.jwzp.ticketmaster.entities.Ticket;
@@ -20,7 +21,8 @@ public class UserController {
     }
 
     @GetMapping()
-    public List<User> index() {
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
@@ -29,7 +31,13 @@ public class UserController {
         return userService.register(loginForm.username, loginForm.password);
     }
 
-    @GetMapping("/me")
+    //TODO implementation
+    @PostMapping("/deactivate")
+    public String deactivateUser(Principal principal) {
+        return "Operation was successful";
+    }
+
+    @GetMapping("/my_tickets")
     public List<Ticket> userTickets(Principal principal){
         return userService.getUserTickets(principal);
     }

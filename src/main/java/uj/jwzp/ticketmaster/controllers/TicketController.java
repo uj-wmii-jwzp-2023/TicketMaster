@@ -1,5 +1,6 @@
 package uj.jwzp.ticketmaster.controllers;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import uj.jwzp.ticketmaster.entities.Ticket;
 import uj.jwzp.ticketmaster.services.TicketService;
@@ -17,6 +18,7 @@ public class TicketController {
     }
 
     @GetMapping()
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<Ticket> getTickets(@PathVariable long locationId, @PathVariable long concertId){
         return ticketService.getAllTickets(locationId, concertId);
     }

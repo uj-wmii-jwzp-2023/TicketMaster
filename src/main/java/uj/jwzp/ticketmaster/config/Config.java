@@ -3,7 +3,6 @@ package uj.jwzp.ticketmaster.config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -21,19 +20,15 @@ import java.util.List;
 public class Config {
     @Autowired
     private TicketRepository ticketRepository;
-    private final Clock clock = Clock.systemUTC();
-    private Logger logger = LoggerFactory.getLogger(Config.class);
-    @Bean
-    public Clock clock() {
-        return Clock.systemUTC();
-    }
+    @Autowired
+    private Clock clock;
+    private final Logger logger = LoggerFactory.getLogger(Config.class);
 
     @Scheduled(fixedRate = 100000)
     public void scheduleFixedRateTask() {
         List<Ticket> ticketList = ticketRepository.findAll();
         LocalDateTime localTime = LocalDateTime.now(clock);
 
-        logger.info("Scheduled task started");
         int deletedTickets = 0;
 
         for (Ticket ticket : ticketList) {
