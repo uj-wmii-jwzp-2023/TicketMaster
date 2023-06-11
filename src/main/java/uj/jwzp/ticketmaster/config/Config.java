@@ -1,43 +1,38 @@
 package uj.jwzp.ticketmaster.config;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
-import uj.jwzp.ticketmaster.entities.Ticket;
-import uj.jwzp.ticketmaster.repositories.TicketRepository;
-
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import uj.jwzp.ticketmaster.UserDetailsServiceImpl;
 
 import java.time.Clock;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Configuration
-@EnableScheduling
 public class Config {
-    @Autowired
-    private TicketRepository ticketRepository;
-    @Autowired
-    private Clock clock;
-    private final Logger logger = LoggerFactory.getLogger(Config.class);
+    @Bean
+    public Clock clock() {
+        return Clock.systemUTC();
+    }
 
-    @Scheduled(fixedRate = 100000)
-    public void scheduleFixedRateTask() {
-        List<Ticket> ticketList = ticketRepository.findAll();
-        LocalDateTime localTime = LocalDateTime.now(clock);
+    @Bean
+    public UserDetailsService userDetailsService(){
+        return new UserDetailsServiceImpl();
+    }
 
-        int deletedTickets = 0;
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-        for (Ticket ticket : ticketList) {
-            if (ticket.getPurchasedAt() == null && Duration.between(ticket.getReservedAt(), localTime).toMinutes() > 5) {
-                ticketRepository.delete(ticket);
-                deletedTickets++;
-            }
-        }
-
-        logger.info("Deleted " + deletedTickets + " tickets");
+    @Bean
+    public AuthenticationProvider authenticationProvider(){
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService());
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        return authenticationProvider;
     }
 }

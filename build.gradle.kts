@@ -19,6 +19,7 @@ dependencies {
 	implementation("org.flywaydb:flyway-core:9.18.0")
 	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.springframework.security:spring-security-test:6.1.0")
 //	/swagger-ui/index.html
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
 }
