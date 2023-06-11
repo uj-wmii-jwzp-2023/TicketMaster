@@ -24,7 +24,6 @@ public class LocationZoneController {
     @PostMapping()
     @PreAuthorize("hasAuthority('ADMIN')")
     public LocationZone addZone(@PathVariable long locationId, @RequestBody LocationZone newZoneLocation) {
-        locationZoneService.addNewZone(locationId, newZoneLocation);
         return locationZoneService.addNewZone(locationId, newZoneLocation);
     }
 
