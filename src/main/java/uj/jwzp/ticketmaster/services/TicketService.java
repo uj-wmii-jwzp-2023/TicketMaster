@@ -63,16 +63,11 @@ public class TicketService {
 
         Ticket ticket = new Ticket(ticketPool, user, null, LocalDateTime.now(clock), null);
 
-        ticketPool.setTicketsLeft(ticketPool.getTicketsLeft() - 1);
-
-        ticketPoolRepository.save(ticketPool);
-
         ticketRepository.save(ticket);
 
         return "Reservation was successful";
     }
 
-    //TODO: user balance update in trigger?
     public Ticket purchaseTicket(long concertId, long locationZoneId, Principal principal) {
         TicketPool ticketPool = getTicketPool(concertId, locationZoneId);
 
@@ -93,10 +88,6 @@ public class TicketService {
 
         purchasedTicket.setPurchasedBy(user);
         purchasedTicket.setPurchasedAt(LocalDateTime.now(clock));
-
-        user.setCash(user.getCash().subtract(ticketPool.getPrice()));
-
-        userRepository.save(user);
 
         ticketRepository.save(purchasedTicket);
 

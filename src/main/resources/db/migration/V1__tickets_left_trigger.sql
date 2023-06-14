@@ -1,7 +1,7 @@
 CREATE OR REPLACE FUNCTION fun()
     RETURNS trigger
     LANGUAGE 'plpgsql'
-    AS $BODY$ DECLARE ticket_pool_id int;
+    AS $BODY$ DECLARE ticket_pool_id bigint;
         BEGIN
             ticket_pool_id = OLD.ticket_pool_id;
             UPDATE ticket_pools
