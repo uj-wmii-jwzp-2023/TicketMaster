@@ -94,6 +94,8 @@ jobs:
           cache-to: type=gha,mode=max     
          
         # Runs Snyk Container (Container and SCA) analysis and uploads result to Snyk.
+      - name: list images
+        run: docker images
       - name: Snyk Container monitor
         run: snyk container monitor -d ${{ steps.meta.outputs.tags }} --file=Dockerfile
         # run: snyk container monitor -d ticketmaster --file=Dockerfile
