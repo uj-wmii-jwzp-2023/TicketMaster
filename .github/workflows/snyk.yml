@@ -88,6 +88,7 @@ jobs:
           context: .
           pull: true
           push: false
+          load: true
           tags: ${{ steps.meta.outputs.tags }}
           # tags: ticketmaster
           cache-from: type=gha
