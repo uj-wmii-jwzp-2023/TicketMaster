@@ -94,7 +94,7 @@ jobs:
          
         # Runs Snyk Container (Container and SCA) analysis and uploads result to Snyk.
       - name: Snyk Container monitor
-        run: snyk container monitor ${{ steps.meta.outputs.tags }} --file=Dockerfile
+        run: snyk container monitor -d ${{ steps.meta.outputs.tags }} --file=Dockerfile
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}/${{ steps.meta.outputs.labels }}
 
