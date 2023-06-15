@@ -88,17 +88,17 @@ jobs:
           context: .
           pull: true
           push: false
-          # tags: ${{ steps.meta.outputs.tags }}
-          tags: ticketmaster
+          tags: ${{ steps.meta.outputs.tags }}
+          # tags: ticketmaster
           cache-from: type=gha
           cache-to: type=gha,mode=max     
          
         # Runs Snyk Container (Container and SCA) analysis and uploads result to Snyk.
       - name: Snyk Container monitor
-        # run: snyk container monitor -d ${{ steps.meta.outputs.tags }} --file=Dockerfile
-        run: snyk container monitor -d ticketmaster --file=Dockerfile
+        run: snyk container monitor -d ${{ steps.meta.outputs.tags }} --file=Dockerfile
+        # run: snyk container monitor -d ticketmaster --file=Dockerfile
         env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}/${{ steps.meta.outputs.labels }}
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       #   # Push the Snyk Code results into GitHub Code Scanning tab
       # - name: Upload result to GitHub Code Scanning
