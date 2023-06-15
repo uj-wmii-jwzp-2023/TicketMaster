@@ -36,6 +36,7 @@ odpowiednią kwotą portfel.
 ![](./docs/db-diagram.drawio.svg)
 
 ## Endpointy
+Dokumentacja wszystkich ścieżek jest dostepna również jako automatycznie wygenerowana [specyfikacja OpenAPI](http://localhost:8080/v3/api-docs), którą można zobaczyć poprzez Swagger UI wchodząc na [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html).   
 
 | Ścieżka                                            | HTTP   | Opis                                              | Uprawnieni użytkownicy |
 |----------------------------------------------------|--------|---------------------------------------------------|------------------------|
@@ -61,3 +62,42 @@ odpowiednią kwotą portfel.
 | /wallet/add                                        | POST   | dodanie środków                                   | ADMIN, USER            |
 | /wallet                                            | GET    | stan środków                                      | ADMIN, USER            |
 | /deactivate                                        | POST   | dezaktywacja konta użytkownika                    | ADMIN, USER            |
+
+
+## Obraz Docker
+
+### Budowanie obrazu
+```
+docker build -t ticketmaster .
+```
+
+### Uruchamianie całego systemu
+W celu uruchomienia aplikacji wraz z bazą danych w kontenerach możemy użyć narzedzia docker-compose:
+```
+docker-compose up
+```
+Zostanie zbudowany obraz aplikacji, utworzona izolowana sieć oraz uruchomione kontenery aplikacji oraz bazy PostgreSQL.  
+Żeby uruchomić aplikację w tle (daemonized), można użyć argumentu `-d`:
+```
+docker-compose up -d
+```
+Dane bazy są przechowywane w wolumenie Dockerowym w folderze `./data/db`.  
+W celu wymuszenia przebudowania obrazu, gdy istnieje on już w systemie, należy użyć opcji `--build`.
+
+### Uruchamianie konetera aplikacji ręcznie
+```
+docker run --name ticketmaster-app -e POSTGRES_HOST=localhost -e POSTGRES_DB=ticketmaster -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -p 8080:8080 ticketmaster
+```
+
+## Konfiguracja aplikacji
+Aplikacja zarówno uruchamiana "bare-metal" jak i w kontenerze (docker run oraz docker-compose) jest konfugurowana przy użyciu zmiennych środowiskowych. Wartości w nawiasach są domyślne.  
+Przykładowe wartości zmiennych można znaleźć w pliku [`.env.sample`](.env.sample). Można go skopiować do pliku `.env` oraz dostosować w celu użycia tych zmiennych środowiskowych w docker-compose (są one wczytywane automatycznie).
+
+#### Ogólne:
+* `API_PORT` _(8080)_ – port na którym nasłuchiwać będzie aplikacja
+#### Baza danych:
+* `POSTGRES_USER` _(postgres)_ – nazwa użytkownika Postgres
+* `POSTGRES_PASSWORD` _(postgres)_ – hasło dla użytkownika Postgres
+* `POSTGRES_HOST` _(localhost)_ – adres serwera Postgres
+* `POSTGRES_PORT` _(5432)_ – port na którym nasłuchuje Postgres
+* `POSTGRES_DB`_(ticketmaster)_ – nazwa bazy danych
