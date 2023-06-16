@@ -1,4 +1,4 @@
-package uj.jwzp.ticketmaster;
+package uj.jwzp.ticketmaster.controllers;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -10,8 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import uj.jwzp.ticketmaster.config.SecurityConfig;
-import uj.jwzp.ticketmaster.controllers.LocationZoneController;
-import uj.jwzp.ticketmaster.entities.Concert;
 import uj.jwzp.ticketmaster.entities.LocationZone;
 import uj.jwzp.ticketmaster.services.LocationZoneService;
 
