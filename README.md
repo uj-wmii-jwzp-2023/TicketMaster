@@ -1,4 +1,5 @@
 # TicketMaster
+[![Java CI with Gradle](https://github.com/uj-wmii-jwzp-2023/TicketMaster/actions/workflows/gradle.yml/badge.svg)](https://github.com/uj-wmii-jwzp-2023/TicketMaster/actions/workflows/gradle.yml)
 
 Aplikacja pozwalająca na rezerwację i zakup biletów na wydarzenia odbywające się w różnych lokacjach.
 
