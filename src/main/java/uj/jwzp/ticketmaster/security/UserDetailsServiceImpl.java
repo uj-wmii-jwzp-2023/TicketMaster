@@ -1,4 +1,4 @@
-package uj.jwzp.ticketmaster;
+package uj.jwzp.ticketmaster.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

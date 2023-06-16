@@ -7,7 +7,8 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import uj.jwzp.ticketmaster.UserDetailsServiceImpl;
+
+import uj.jwzp.ticketmaster.security.UserDetailsServiceImpl;
 
 import java.time.Clock;
 

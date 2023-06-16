@@ -21,7 +21,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 
-import uj.jwzp.ticketmaster.ConcertSchema;
 import uj.jwzp.ticketmaster.entities.Concert;
 import uj.jwzp.ticketmaster.entities.Location;
 import uj.jwzp.ticketmaster.entities.LocationZone;
@@ -29,6 +28,7 @@ import uj.jwzp.ticketmaster.repositories.ConcertRepository;
 import uj.jwzp.ticketmaster.repositories.LocationRepository;
 import uj.jwzp.ticketmaster.repositories.LocationZoneRepository;
 import uj.jwzp.ticketmaster.repositories.TicketPoolRepository;
+import uj.jwzp.ticketmaster.schemas.ConcertSchema;
 
 @SpringBootTest
 @Import(FlywayAutoConfiguration.class)

@@ -1,4 +1,4 @@
-package uj.jwzp.ticketmaster;
+package uj.jwzp.ticketmaster.schemas;
 
 public class LoginForm {
     public String username;

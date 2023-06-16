@@ -4,8 +4,9 @@ import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import uj.jwzp.ticketmaster.ConcertSchema;
+
 import uj.jwzp.ticketmaster.entities.Concert;
+import uj.jwzp.ticketmaster.schemas.ConcertSchema;
 import uj.jwzp.ticketmaster.services.ConcertService;
 
 @RestController

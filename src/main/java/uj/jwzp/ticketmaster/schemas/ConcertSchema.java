@@ -1,4 +1,4 @@
-package uj.jwzp.ticketmaster;
+package uj.jwzp.ticketmaster.schemas;
 
 import java.math.BigDecimal;
 import java.util.List;

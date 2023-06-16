@@ -1,7 +1,7 @@
 package uj.jwzp.ticketmaster.entities;
 
 import jakarta.persistence.*;
-import uj.jwzp.ticketmaster.UserRole;
+import uj.jwzp.ticketmaster.security.UserRole;
 
 import java.math.BigDecimal;
 
