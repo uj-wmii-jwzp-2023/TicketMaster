@@ -1,4 +1,4 @@
-package uj.jwzp.ticketmaster;
+package uj.jwzp.ticketmaster.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+
+import uj.jwzp.ticketmaster.ConcertSchema;
 import uj.jwzp.ticketmaster.config.SecurityConfig;
 import uj.jwzp.ticketmaster.controllers.ConcertController;
 import uj.jwzp.ticketmaster.entities.Concert;

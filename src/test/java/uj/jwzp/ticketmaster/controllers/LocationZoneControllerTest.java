@@ -1,4 +1,4 @@
-package uj.jwzp.ticketmaster;
+package uj.jwzp.ticketmaster.controllers;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

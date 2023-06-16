@@ -1,4 +1,4 @@
-package uj.jwzp.ticketmaster;
+package uj.jwzp.ticketmaster.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
