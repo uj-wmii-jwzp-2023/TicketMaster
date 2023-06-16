@@ -13,7 +13,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import uj.jwzp.ticketmaster.ConcertSchema;
 import uj.jwzp.ticketmaster.config.SecurityConfig;
-import uj.jwzp.ticketmaster.controllers.ConcertController;
 import uj.jwzp.ticketmaster.entities.Concert;
 import uj.jwzp.ticketmaster.services.ConcertService;
 

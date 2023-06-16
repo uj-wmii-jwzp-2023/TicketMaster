@@ -11,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import uj.jwzp.ticketmaster.config.SecurityConfig;
-import uj.jwzp.ticketmaster.controllers.LocationController;
 import uj.jwzp.ticketmaster.entities.Location;
 import uj.jwzp.ticketmaster.services.LocationService;
 
