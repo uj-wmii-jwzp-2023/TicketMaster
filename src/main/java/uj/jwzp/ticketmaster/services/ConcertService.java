@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import uj.jwzp.ticketmaster.ConcertSchema;
 import uj.jwzp.ticketmaster.entities.Concert;
 import uj.jwzp.ticketmaster.entities.Location;
 import uj.jwzp.ticketmaster.entities.LocationZone;
@@ -16,6 +15,7 @@ import uj.jwzp.ticketmaster.repositories.ConcertRepository;
 import uj.jwzp.ticketmaster.repositories.LocationRepository;
 import uj.jwzp.ticketmaster.repositories.LocationZoneRepository;
 import uj.jwzp.ticketmaster.repositories.TicketPoolRepository;
+import uj.jwzp.ticketmaster.schemas.ConcertSchema;
 
 @Service
 public class ConcertService {

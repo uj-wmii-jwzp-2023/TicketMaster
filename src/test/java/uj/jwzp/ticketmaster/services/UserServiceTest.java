@@ -20,8 +20,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import uj.jwzp.ticketmaster.UserRole;
 import uj.jwzp.ticketmaster.entities.User;
+import uj.jwzp.ticketmaster.entities.UserRole;
 import uj.jwzp.ticketmaster.repositories.TicketRepository;
 import uj.jwzp.ticketmaster.repositories.UserRepository;
 

@@ -2,9 +2,10 @@ package uj.jwzp.ticketmaster.controllers;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import uj.jwzp.ticketmaster.LoginForm;
+
 import uj.jwzp.ticketmaster.entities.Ticket;
 import uj.jwzp.ticketmaster.entities.User;
+import uj.jwzp.ticketmaster.schemas.LoginForm;
 import uj.jwzp.ticketmaster.services.UserService;
 
 import java.math.BigDecimal;
