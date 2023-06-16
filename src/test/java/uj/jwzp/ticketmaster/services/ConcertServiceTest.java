@@ -62,7 +62,7 @@ public class ConcertServiceTest {
 			new LocationZone(location, "Zone B", "B", 7),
 			new LocationZone(location, "Zone C", "C", 11)
 		);
-		when(locationZoneRepository.findByLocation_Id(LOCATION_ID)).thenReturn(locationZones);
+		when(locationZoneRepository.findByLocationId(LOCATION_ID)).thenReturn(locationZones);
 	}
 
 	@Test

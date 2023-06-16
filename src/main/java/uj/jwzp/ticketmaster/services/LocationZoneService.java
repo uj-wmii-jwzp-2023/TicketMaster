@@ -29,7 +29,7 @@ public class LocationZoneService {
         Optional<Location> location = locationRepository.findById(locationId);
         if (location.isEmpty())
             throw new EntityNotExistsException(locationId);
-        return repository.findByLocation_Id(locationId);
+        return repository.findByLocationId(locationId);
     }
 
     public LocationZone addNewZone(long locationId, LocationZone locationZone) {

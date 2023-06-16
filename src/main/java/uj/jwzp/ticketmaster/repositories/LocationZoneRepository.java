@@ -6,5 +6,5 @@ import uj.jwzp.ticketmaster.entities.LocationZone;
 import java.util.List;
 
 public interface LocationZoneRepository extends JpaRepository<LocationZone, Long> {
-    List<LocationZone> findByLocation_Id(long id);
+    List<LocationZone> findByLocationId(long id);
 }

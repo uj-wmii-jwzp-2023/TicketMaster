@@ -41,7 +41,7 @@ public class ConcertService {
 
     public List<Concert> getConcerts(long locationId) {
         Location location = locationRepository.findById(locationId).orElseThrow(() -> new EntityNotExistsException(locationId));
-        return repository.findByLocation_Id(locationId);
+        return repository.findByLocationId(locationId);
     }
 
     public Concert addConcert(long locationId, ConcertSchema concert) {
@@ -51,7 +51,7 @@ public class ConcertService {
         newConcert.setLocation(location);
         newConcert.setName(concert.name());
 
-        List<LocationZone> locationZones = locationZoneRepository.findByLocation_Id(locationId);
+        List<LocationZone> locationZones = locationZoneRepository.findByLocationId(locationId);
         int i = 0;
 
         for (BigDecimal price : concert.pricesList()) {
