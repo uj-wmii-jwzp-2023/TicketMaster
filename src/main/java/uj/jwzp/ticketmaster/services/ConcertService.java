@@ -44,7 +44,6 @@ public class ConcertService {
         return repository.findByLocation_Id(locationId);
     }
 
-    // TODO add one test for this method, checking if all zones are added along with concert
     public Concert addConcert(long locationId, ConcertSchema concert) {
         Location location = locationRepository.findById(locationId).orElseThrow(() -> new EntityNotExistsException(locationId));
 
