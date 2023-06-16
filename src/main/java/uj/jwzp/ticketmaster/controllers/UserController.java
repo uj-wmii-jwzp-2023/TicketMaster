@@ -31,12 +31,6 @@ public class UserController {
         return userService.register(loginForm.username, loginForm.password);
     }
 
-    //TODO implementation
-    @PostMapping("/deactivate")
-    public String deactivateUser(Principal principal) {
-        return "Operation was successful";
-    }
-
     @GetMapping("/mytickets")
     public List<Ticket> userTickets(Principal principal){
         return userService.getUserTickets(principal);

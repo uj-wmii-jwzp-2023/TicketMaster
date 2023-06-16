@@ -55,7 +55,6 @@ public class TicketService {
         return ticketList;
     }
 
-    //TODO: ticketsLeft decremental in trigger?
     public String reserveTicket(long concertId, long locationZoneId, Principal principal) {
         TicketPool ticketPool = getTicketPool(concertId, locationZoneId);
 

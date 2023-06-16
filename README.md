@@ -62,7 +62,6 @@ Dokumentacja wszystkich ścieżek jest dostepna również jako automatycznie wyg
 | /register                                          | POST   | rejestracja                                       | -                      |
 | /wallet/add                                        | POST   | dodanie środków                                   | ADMIN, USER            |
 | /wallet                                            | GET    | stan środków                                      | ADMIN, USER            |
-| /deactivate                                        | POST   | dezaktywacja konta użytkownika                    | ADMIN, USER            |
 
 
 ## Obraz Docker
