@@ -1,19 +1,19 @@
 package uj.jwzp.ticketmaster.config;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
-import uj.jwzp.ticketmaster.entities.Ticket;
-import uj.jwzp.ticketmaster.repositories.TicketRepository;
-
-
 import java.time.Clock;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+
+import uj.jwzp.ticketmaster.ampq.LogAmqpSender;
+import uj.jwzp.ticketmaster.entities.Ticket;
+import uj.jwzp.ticketmaster.repositories.TicketRepository;
 
 @Configuration
 @EnableScheduling
@@ -22,9 +22,19 @@ public class ScheduleConfig {
     private TicketRepository ticketRepository;
     @Autowired
     private Clock clock;
-    private final Logger logger = LoggerFactory.getLogger(ScheduleConfig.class);
 
-    @Scheduled(fixedRate = 100000)
+    // private final Logger logger = LoggerFactory.getLogger(ScheduleConfig.class);
+
+    @Autowired
+    LogAmqpSender logAmqpSender;
+
+    AtomicInteger count = new AtomicInteger(0);
+    @Scheduled(fixedRate = 2000)
+    public void scheduleTestHeartbeat() {
+        logAmqpSender.debug(ScheduleConfig.class, "Heartbeat " + count.incrementAndGet());
+    }
+
+    @Scheduled(fixedRate = 10000)
     public void scheduleFixedRateTask() {
         List<Ticket> ticketList = ticketRepository.findAll();
         LocalDateTime localTime = LocalDateTime.now(clock);
@@ -38,6 +48,9 @@ public class ScheduleConfig {
             }
         }
 
-        logger.info("Deleted " + deletedTickets + " tickets");
+        // logger.info("Deleted " + deletedTickets + " tickets");
+        logAmqpSender.info(ScheduleConfig.class, "Deleted " + deletedTickets + " tickets");
     }
+
+    
 }
